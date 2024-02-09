@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cronômetro</title>
+  </head>
+  <style>
+
+    .centralizacao {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    #cronometro{
+        font-size: 70px;
+        width: 200px;
+        height: 200px;
+        /* border: 3px solid black; */
+        display: flex;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        margin: 10px;
+    }
+    button {
+      width: 100px;
+      height: 40px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .bt1{
+        background-color: green;
+        color: white;
+    }
+    .bt2{
+        background-color: rgb(255, 0, 0);
+        color: white;
+    }
+  </style>
+  <body>
+    <div class="centralizacao">
+      <div id="cronometro">0</div>
+      <div class="button">
+        <button onclick="iniciarLooping()" class="bt1">Iniciar</button>
+        <button onclick="pararTimer()" class="bt2">Parar</button>
+      </div>
+    </div>
+    <script>
+      let intervaloId; // Para armazenar o ID do intervalo
+
+      function iniciarCronometro() {
+        let segundos = 0;
+        const intervalo = 1000; // 1000 milissegundos = 1 segundo
+
+        function atualizarCronometro() {
+          segundos++;
+          document.getElementById(
+            "cronometro"
+          ).innerText = segundos;
+
+          // Se passaram 15 segundos, reinicia o cronômetro
+          if (segundos % 15 === 0) {
+            reiniciarCronometro();
+          }
+        }
+
+        function reiniciarCronometro() {
+          segundos = 0;
+        }
+
+        // Inicia o cronômetro a cada segundo
+        intervaloId = setInterval(atualizarCronometro, intervalo);
+      }
+
+      function iniciarLooping() {
+        // Limpa o intervalo existente antes de iniciar um novo
+        clearInterval(intervaloId);
+
+        // Inicia o cronômetro
+        iniciarCronometro();
+      }
+
+      function pararTimer() {
+        // Limpa o intervalo existente
+        clearInterval(intervaloId);
+
+        // Zera o cronômetro
+        document.getElementById("cronometro").innerText = "0";
+      }
+
+      // Inicia o cronômetro quando a página carrega
+      // window.onload = iniciarCronometro;
+    </script>
+  </body>
+</html>
